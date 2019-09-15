@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const config = require('config');
 const jwt = require('jsonwebtoken');
 const addUserFilter = require('../../middleware/addUserFilter');
+const auth = require('../../middleware/auth');
 
 // User Model
 const User = require('../../models/User');
@@ -11,7 +12,7 @@ const User = require('../../models/User');
 // @route   POST api/users
 // @desc    Register new user
 // @access  Public
-router.post('/', addUserFilter, (req, res) => {
+router.post('/', auth, addUserFilter, (req, res) => {
     const { name, email, password, role, phone_number } = req.body;
 
     // Simple validation
@@ -43,10 +44,10 @@ router.post('/', addUserFilter, (req, res) => {
                                 { id: user.id, role: role.id },
                                 config.get('jwtSecret'),
                                 { expiresIn: 3600 },
-                                (err, token) => {
+                                (err) => {
                                     if (err) throw err;
                                     res.json({
-                                        token,
+                                        //token,
                                         user: {
                                             id: user.id,
                                             name: user.name,
