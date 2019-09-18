@@ -2,8 +2,6 @@
 // If user is admin, user can add any role
 // else if user is manager, user can only add employee role
 // employee cannot add any user
-const config = require('config');
-const jwt = require('jsonwebtoken');
 
 function addUserFilter(req, res, next) {
 

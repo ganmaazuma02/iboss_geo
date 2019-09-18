@@ -14,14 +14,18 @@ function auth(req, res, next) {
         // Verify token if there is a token
         const decoded = jwt.verify(token, config.get('jwtSecret'));
 
-        if (role[decoded.role].find((url) => { return url == req.originalUrl })) {
-            // Add user from payload if the user's role authorized to access
-            req.user = decoded;
-            res.locals.decoded = decoded;
-            next();
-        } else {
-            return res.status(401).json({ msg: 'Access Denied: You dont have correct privilege to perform this operation' });
-        }
+        req.user = decoded;
+        res.locals.decoded = decoded;
+        next();
+
+        // if (role[decoded.role].find((url) => { return url == req.originalUrl })) {
+        //     // Add user from payload if the user's role authorized to access
+        //     req.user = decoded;
+        //     res.locals.decoded = decoded;
+        //     next();
+        // } else {
+        //     return res.status(401).json({ msg: 'Access Denied: You dont have correct privilege to perform this operation' });
+        // }
 
 
     } catch (ex) {

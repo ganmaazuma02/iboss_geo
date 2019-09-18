@@ -16,6 +16,10 @@ const LocationSchema = new Schema({
         type: Number,
         required: true
     },
+    current_task: {
+        type: String,
+        required: true
+    },
     update_date: {
         type: Date,
         required: true,

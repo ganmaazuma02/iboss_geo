@@ -8,6 +8,7 @@ const auth = require('../../middleware/auth');
 
 // User Model
 const User = require('../../models/User');
+const Location = require('../../models/Location');
 
 // @route   POST api/users
 // @desc    Register new user
@@ -62,6 +63,31 @@ router.post('/', auth, addUserFilter, (req, res) => {
                 })
             });
         })
+});
+
+
+// @route   GET api/users/:id
+// @desc    Get one employee with location details
+// @access  Private, Only admin and manager
+router.get('/:id', auth, (req, res) => {
+
+    const { decoded } = res.locals;
+
+    User.findOne({ national_id: req.params.id })
+        .select('-password')
+        .then(user => {
+            if (!user) return res.status(400).json({ msg: 'Cannot find user' });
+
+            if (decoded.role === "employee" && user.national_id !== decoded.national_id) return res.status(401).json({ msg: 'You do not have access to view this user' });
+
+            if (decoded.role === "manager" && (user.role === "manager" || user.role === "admin")) return res.status(401).json({ msg: 'You do not have access to view this user' });
+
+            Location.find({ user_national_id: req.params.id }).sort({ update_date: -1 }).limit(10)
+                .then(locs => res.json({
+                    user: user,
+                    latest_locations: locs
+                }))
+        });
 });
 
 
