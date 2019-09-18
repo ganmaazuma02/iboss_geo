@@ -69,7 +69,7 @@ export default function (state = initialState, action) {
                 ...state,
                 selectedEmployee: employee,
                 isEmployeeSelected: true,
-                employeeMap: `https://maps.googleapis.com/maps/api/staticmap?center=${employee.position.latitude},${employee.position.longitude}&zoom=13&size=800x400&sensor=false&markers=color:red%7Clabel:C%7C${employee.position.latitude},${employee.position.longitude}&key=AIzaSyC-9p0jL3pp223_jtQAyigMbFDw2OgnZLk`
+                employeeMap: `https://maps.googleapis.com/maps/api/staticmap?center=${employee.position.latitude},${employee.position.longitude}&zoom=13&size=800x400&sensor=false&markers=color:red%7Clabel:C%7C${employee.position.latitude},${employee.position.longitude}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`
             }
         default:
             return state;

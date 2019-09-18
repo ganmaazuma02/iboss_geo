@@ -7,6 +7,12 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
+    national_id: {
+        type: String,
+        required: true,
+        minlength: 12,
+        maxlength: 12
+    },
     email: {
         type: String,
         required: true,

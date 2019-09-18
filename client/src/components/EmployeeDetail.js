@@ -30,7 +30,7 @@ class EmployeeDetail extends Component {
                     latitude: position.coords.latitude,
                     longitude: position.coords.longitude
                 },
-                map: `https://maps.googleapis.com/maps/api/staticmap?center=${position.coords.latitude},${position.coords.longitude}&zoom=13&size=800x400&sensor=false&markers=color:red%7Clabel:C%7C${position.coords.latitude},${position.coords.longitude}&key=${process.env.GOOGLE_API_KEY}`
+                map: `https://maps.googleapis.com/maps/api/staticmap?center=${position.coords.latitude},${position.coords.longitude}&zoom=13&size=800x400&sensor=false&markers=color:red%7Clabel:C%7C${position.coords.latitude},${position.coords.longitude}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`
             })
         });
 
