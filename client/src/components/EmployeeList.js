@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Paper, Typography, List, ListItem, ListItemText } from '@material-ui/core'
 import { connect } from 'react-redux'
-import { getEmployees } from '../actions/employeeActions'
+import { getEmployees, getEmployee } from '../actions/employeeActions'
 import PropTypes from 'prop-types'
 
 class EmployeeList extends Component {
@@ -13,16 +13,22 @@ class EmployeeList extends Component {
     static propTypes = {
         styles: PropTypes.object,
         getEmployees: PropTypes.func.isRequired,
+        getEmployee: PropTypes.func.isRequired,
         employee: PropTypes.object.isRequired
+    }
+
+    onEmployeeSelected = (national_id) => {
+        this.props.getEmployee(national_id);
     }
 
     render() {
         const { employeeList } = this.props.employee;
         return (
             <Paper style={this.props.styles.Paper}>
+                <Typography variant="h5">Employees</Typography>
                 <List>
                     {employeeList.map(({ national_id, name }) => (
-                        <ListItem button>
+                        <ListItem button key={national_id} onClick={this.onEmployeeSelected.bind(this, national_id)}>
                             <ListItemText primary={name}></ListItemText>
                         </ListItem>
                     ))}
@@ -36,4 +42,4 @@ const mapStateToProps = (state) => ({
     employee: state.employee
 })
 
-export default connect(mapStateToProps, { getEmployees })(EmployeeList);
+export default connect(mapStateToProps, { getEmployees, getEmployee })(EmployeeList);

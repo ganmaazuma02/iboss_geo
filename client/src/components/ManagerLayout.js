@@ -10,11 +10,11 @@ export default class ManagerLayout extends Component {
 
     render() {
         return (
-            <Grid container>
-                <Grid item sm>
+            <Grid container spacing={3}>
+                <Grid item sm={4}>
                     <EmployeeList styles={this.styles}></EmployeeList>
                 </Grid>
-                <Grid item sm>
+                <Grid item sm={8}>
                     <EmployeeDetail styles={this.styles}></EmployeeDetail>
                 </Grid>
             </Grid>
