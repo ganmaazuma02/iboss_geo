@@ -42,7 +42,7 @@ class EmployeeDetail extends Component {
     }
 
     render() {
-        const { isEmployeeSelected, selectedEmployee, employeeMap } = this.props.employee;
+        const { isEmployeeSelected, selectedEmployee, employeeMap, current_task, current_location } = this.props.employee;
         return (
             <Paper style={this.props.styles.Paper}>
                 <Typography variant="h5">Welcome!</Typography>
@@ -53,12 +53,12 @@ class EmployeeDetail extends Component {
                             <img src={employeeMap} />
                             : null
                         }
-                        <Typography variant="subtitle2">Latest Position: <Typography variant="body1">({selectedEmployee.position.latitude},{selectedEmployee.position.longitude})</Typography></Typography>
+                        <Typography variant="subtitle2">Latest Position: <Typography variant="body1">({current_location.latitude},{current_location.longitude})</Typography></Typography>
                         <Typography variant="subtitle2">National ID: <Typography variant="body1">{selectedEmployee.national_id}</Typography></Typography>
                         <Typography variant="subtitle2">Name: <Typography variant="body1">{selectedEmployee.name}</Typography></Typography>
                         <Typography variant="subtitle2">Phone Number: <Typography variant="body1">{selectedEmployee.phone_number}</Typography></Typography>
                         <Typography variant="subtitle2">Email: <Typography variant="body1">{selectedEmployee.email}</Typography></Typography>
-                        <Typography variant="subtitle2">Curent Task: <Typography variant="body1">{selectedEmployee.current_task}</Typography></Typography>
+                        <Typography variant="subtitle2">Curent Task: <Typography variant="body1">{current_task}</Typography></Typography>
 
                     </Fragment>
                     : null

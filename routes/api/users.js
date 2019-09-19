@@ -14,10 +14,10 @@ const Location = require('../../models/Location');
 // @desc    Register new user
 // @access  Public
 router.post('/', auth, addUserFilter, (req, res) => {
-    const { name, email, password, role, phone_number } = req.body;
+    const { name, national_id, email, password, role, phone_number } = req.body;
 
     // Simple validation
-    if (!name || !email || !password || !role || !phone_number) {
+    if (!name || !national_id || !email || !password || !role || !phone_number) {
         return res.status(400).json({ msg: 'Please enter all fields' });
     }
 
@@ -28,6 +28,7 @@ router.post('/', auth, addUserFilter, (req, res) => {
 
             const newUser = new User({
                 name,
+                national_id,
                 email,
                 password,
                 role,
@@ -42,7 +43,7 @@ router.post('/', auth, addUserFilter, (req, res) => {
                     newUser.save()
                         .then(user => {
                             jwt.sign(
-                                { id: user.id, role: role.id },
+                                { id: user.id, role: user.role, national_id: user.national_id },
                                 config.get('jwtSecret'),
                                 { expiresIn: 3600 },
                                 (err) => {
@@ -52,6 +53,7 @@ router.post('/', auth, addUserFilter, (req, res) => {
                                         user: {
                                             id: user.id,
                                             name: user.name,
+                                            national_id: user.national_id,
                                             email: user.email,
                                             role: user.role,
                                             phone_number: user.phone_number
@@ -78,9 +80,9 @@ router.get('/:id', auth, (req, res) => {
         .then(user => {
             if (!user) return res.status(400).json({ msg: 'Cannot find user' });
 
-            if (decoded.role === "employee" && user.national_id !== decoded.national_id) return res.status(401).json({ msg: 'You do not have access to view this user' });
+            if (decoded.role === "employee" && user.national_id !== decoded.national_id) return res.status(401).json({ msg: 'Access Denied: You dont have correct privilege to perform this operation' });
 
-            if (decoded.role === "manager" && (user.role === "manager" || user.role === "admin")) return res.status(401).json({ msg: 'You do not have access to view this user' });
+            if (decoded.role === "manager" && (user.role === "manager" || user.role === "admin")) return res.status(401).json({ msg: 'Access Denied: You dont have correct privilege to perform this operation' });
 
             Location.find({ user_national_id: req.params.id }).sort({ update_date: -1 }).limit(10)
                 .then(locs => res.json({

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Grid } from '@material-ui/core'
-import EmployeeList from './EmployeeList'
-import EmployeeDetail from './EmployeeDetail'
+import EmployeeList from '../EmployeeList'
+import EmployeeDetail from '../EmployeeDetail'
 
 export default class ManagerLayout extends Component {
     styles = {

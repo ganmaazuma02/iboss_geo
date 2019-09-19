@@ -25,6 +25,7 @@ mongoose.connect(db,
 app.use('/api/auth', require('./routes/api/auth'));
 app.use('/api/users', require('./routes/api/users'));
 app.use('/api/locations', require('./routes/api/locations'));
+app.use('/api/employees', require('./routes/api/employees'));
 
 // Serve static assets if in production
 // In this case it's our client React app

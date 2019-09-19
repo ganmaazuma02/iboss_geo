@@ -5,71 +5,26 @@ const initialState = {
     isEmployeeSelected: false,
     selectedEmployee: null,
     employeeMap: '',
-    employeeList: [
-        {
-            national_id: '920403074322',
-            name: 'Ali Abd Rahim'
-        },
-        {
-            national_id: '910523521232',
-            name: 'Chong Chee Keong'
-        },
-        {
-            national_id: '930210424242',
-            name: 'Krishnasamy Raja'
-        }
-    ],
-    employeeDetails: [
-        {
-            national_id: '920403074322',
-            name: 'Ali Abd Rahim',
-            phone_number: '0123456789',
-            email: 'ali@iboss.com',
-            current_task: 'sales',
-            position: {
-                latitude: 5.6436,
-                longitude: 100.4894
-            }
-        },
-        {
-            national_id: '910523521232',
-            name: 'Chong Chee Keong',
-            phone_number: '0139876543',
-            email: 'chong@iboss.com',
-            current_task: 'field tech support',
-            position: {
-                latitude: 5.4356,
-                longitude: 100.3091
-            }
-        },
-        {
-            national_id: '930210424242',
-            name: 'Krishnasamy Raja',
-            phone_number: '0145648909',
-            email: 'krishnasamy@iboss.com',
-            current_task: 'device installation',
-            position: {
-                latitude: 5.3655,
-                longitude: 100.4590
-            }
-        }
-    ]
-
+    employeeList: [],
+    current_task: '',
+    current_location: {}
 }
 
 export default function (state = initialState, action) {
     switch (action.type) {
         case GET_EMPLOYEES:
             return {
-                ...state
+                ...state,
+                employeeList: action.payload
             }
         case GET_EMPLOYEE:
-            const employee = state.employeeDetails.find(employee => employee.national_id === action.payload);
             return {
                 ...state,
-                selectedEmployee: employee,
+                selectedEmployee: action.payload.user,
                 isEmployeeSelected: true,
-                employeeMap: `https://maps.googleapis.com/maps/api/staticmap?center=${employee.position.latitude},${employee.position.longitude}&zoom=13&size=800x400&sensor=false&markers=color:red%7Clabel:C%7C${employee.position.latitude},${employee.position.longitude}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`
+                current_task: action.payload.latest_locations ? action.payload.latest_locations[0].current_task : 'no task',
+                current_location: action.payload.latest_locations ? { latitude: action.payload.latest_locations[0].latitude, longitude: action.payload.latest_locations[0].longitude } : { latitude: null, longitude: null }, // TODO: Error handling
+                employeeMap: `https://maps.googleapis.com/maps/api/staticmap?center=${action.payload.latest_locations[0].latitude},${action.payload.latest_locations[0].longitude}&zoom=13&size=800x400&sensor=false&markers=color:red%7Clabel:C%7C${action.payload.latest_locations[0].latitude},${action.payload.latest_locations[0].longitude}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`
             }
         default:
             return state;
