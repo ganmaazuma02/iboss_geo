@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
-const config = require('config');
 const jwt = require('jsonwebtoken');
 const addUserFilter = require('../../middleware/addUserFilter');
 const auth = require('../../middleware/auth');
@@ -44,7 +43,7 @@ router.post('/', auth, addUserFilter, (req, res) => {
                         .then(user => {
                             jwt.sign(
                                 { id: user.id, role: user.role, national_id: user.national_id },
-                                config.get('jwtSecret'),
+                                process.env.JWT_SECRET,
                                 { expiresIn: 3600 },
                                 (err) => {
                                     if (err) throw err;

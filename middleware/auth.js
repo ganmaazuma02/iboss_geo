@@ -1,4 +1,4 @@
-const config = require('config');
+
 const jwt = require('jsonwebtoken');
 const role = require('./role');
 
@@ -12,7 +12,7 @@ function auth(req, res, next) {
 
     try {
         // Verify token if there is a token
-        const decoded = jwt.verify(token, config.get('jwtSecret'));
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
         req.user = decoded;
         res.locals.decoded = decoded;

@@ -1,4 +1,0 @@
-{
-    "mongoURI": "mongodb+srv://anas:ibossgeonode2020@iboss-geo-dbcluster-ukbfr.mongodb.net/test?retryWrites=true&w=majority",
-    "jwtSecret": "iboss_geo_secret_key_from_anas"
-}
