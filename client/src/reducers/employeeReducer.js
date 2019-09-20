@@ -22,9 +22,9 @@ export default function (state = initialState, action) {
                 ...state,
                 selectedEmployee: action.payload.user,
                 isEmployeeSelected: true,
-                current_task: action.payload.latest_locations ? action.payload.latest_locations[0].current_task : 'no task',
-                current_location: action.payload.latest_locations ? { latitude: action.payload.latest_locations[0].latitude, longitude: action.payload.latest_locations[0].longitude } : { latitude: null, longitude: null }, // TODO: Error handling
-                employeeMap: `https://maps.googleapis.com/maps/api/staticmap?center=${action.payload.latest_locations[0].latitude},${action.payload.latest_locations[0].longitude}&zoom=13&size=800x400&sensor=false&markers=color:red%7Clabel:C%7C${action.payload.latest_locations[0].latitude},${action.payload.latest_locations[0].longitude}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`
+                current_task: action.payload.latest_locations.length > 0 ? action.payload.latest_locations[0].current_task : 'no task',
+                current_location: action.payload.latest_locations.length > 0 ? { latitude: action.payload.latest_locations[0].latitude, longitude: action.payload.latest_locations[0].longitude } : null, // TODO: Error handling
+                employeeMap: action.payload.latest_locations.length > 0 ? `https://maps.googleapis.com/maps/api/staticmap?center=${action.payload.latest_locations[0].latitude},${action.payload.latest_locations[0].longitude}&zoom=13&size=800x400&sensor=false&markers=color:red%7Clabel:C%7C${action.payload.latest_locations[0].latitude},${action.payload.latest_locations[0].longitude}&key=${process.env.REACT_APP_GOOGLE_API_KEY}` : ''
             }
         default:
             return state;

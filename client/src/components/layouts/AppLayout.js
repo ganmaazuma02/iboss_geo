@@ -19,7 +19,7 @@ class AppLayout extends Component {
             <Fragment>
                 <Header></Header>
                 {isAuthenticated ?
-                    (user.role === 'manager' ? <ManagerLayout></ManagerLayout> : <EmployeeLayout></EmployeeLayout>)
+                    (user.role === 'employee' ? <EmployeeLayout></EmployeeLayout> : <ManagerLayout></ManagerLayout>)
                     : null
                 }
 

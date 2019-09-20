@@ -5,38 +5,6 @@ import PropTypes from 'prop-types'
 
 class EmployeeDetail extends Component {
 
-    state = {
-        location: {
-            latitude: '',
-            longitude: ''
-        },
-        map: ''
-    }
-
-    componentDidMount() {
-        //this.getPosition();
-    }
-
-    // Gets user location using built in HTML geolocation API
-    getPosition = () => {
-        const geo = navigator.geolocation;
-
-        // if user rejected geolocation
-        if (!geo) return;
-
-        geo.getCurrentPosition((position) => {
-            this.setState({
-                location: {
-                    latitude: position.coords.latitude,
-                    longitude: position.coords.longitude
-                },
-                map: `https://maps.googleapis.com/maps/api/staticmap?center=${position.coords.latitude},${position.coords.longitude}&zoom=13&size=800x400&sensor=false&markers=color:red%7Clabel:C%7C${position.coords.latitude},${position.coords.longitude}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`
-            })
-        });
-
-    }
-
-
     static propTypes = {
         employee: PropTypes.object.isRequired
     }
@@ -53,7 +21,8 @@ class EmployeeDetail extends Component {
                             <img src={employeeMap} />
                             : null
                         }
-                        <Typography variant="subtitle2">Latest Position: <Typography variant="body1">({current_location.latitude},{current_location.longitude})</Typography></Typography>
+                        {current_location ? <Typography variant="subtitle2">Latest Position: <Typography variant="body1">({current_location.latitude},{current_location.longitude})</Typography></Typography>
+                            : <Typography variant="subtitle2">Latest Position: Not Updated</Typography>}
                         <Typography variant="subtitle2">National ID: <Typography variant="body1">{selectedEmployee.national_id}</Typography></Typography>
                         <Typography variant="subtitle2">Name: <Typography variant="body1">{selectedEmployee.name}</Typography></Typography>
                         <Typography variant="subtitle2">Phone Number: <Typography variant="body1">{selectedEmployee.phone_number}</Typography></Typography>
