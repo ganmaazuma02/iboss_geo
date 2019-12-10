@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import GoogleMapReact from 'google-map-react'
 import { Beenhere } from '@material-ui/icons'
-import { Paper, Typography } from '@material-ui/core'
+import { Button, TextField, Paper, Typography } from '@material-ui/core'
 import { connect } from 'react-redux'
 import { addLocation } from '../actions/locationActions'
 
@@ -76,7 +76,7 @@ class EmployeeLocation extends Component {
             this.props.addLocation({
                 latitude: position.coords.latitude,
                 longitude: position.coords.longitude,
-                current_task: 'Test Task'
+                current_task: this.state.current_task
             });
         }, () => this.setState({
             geo: false
@@ -88,10 +88,33 @@ class EmployeeLocation extends Component {
 
     }
 
+    onChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        });
+    }
+
+    onSubmit = (e) => {
+        e.preventDefault();
+
+        this.getPosition();
+
+    }
+
     render() {
         return (
             <Paper style={this.props.styles.Paper}>
                 <Typography variant="h5">Your current location</Typography>
+                <TextField
+                    autoFocus
+                    name="current_task"
+                    margin="dense"
+                    label="Current Task"
+                    onChange={this.onChange}
+                />
+                <Button onClick={this.onSubmit} color="primary">
+                    Update Task
+                    </Button>
                 <div style={{ width: 600, height: 400 }}>
                     {this.state.geo ?
 
