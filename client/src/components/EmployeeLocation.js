@@ -17,6 +17,7 @@ class EmployeeLocation extends Component {
         latitude: '',
         longitude: '',
         current_task: '',
+        msg: '',
         geo: false
     }
 
@@ -99,6 +100,9 @@ class EmployeeLocation extends Component {
 
         this.getPosition();
 
+        this.setState({
+            msg: 'success'
+        });
     }
 
     render() {
@@ -115,6 +119,8 @@ class EmployeeLocation extends Component {
                 <Button onClick={this.onSubmit} color="primary">
                     Update Task
                     </Button>
+                {this.state.msg == 'success' ? <Typography style={{ color: 'green' }}>Updated the current task!</Typography> : null}
+                {this.state.msg == 'failed' ? <Typography style={{ color: 'red' }}>Failed to update the current task!</Typography> : null}
                 <div style={{ width: 600, height: 400 }}>
                     {this.state.geo ?
 
